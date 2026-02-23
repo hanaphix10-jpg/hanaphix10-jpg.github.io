@@ -1,0 +1,864 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hanafi Store — Toko Online</title>
+  <meta name="description" content="Hanafi Store — Toko online simpel, cepat, dan responsif." />
+  <style>
+    :root{
+      --bg: #0b1220;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.1);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.65);
+      --line: rgba(255,255,255,.12);
+      --brand: #7c3aed;
+      --brand2: #22c55e;
+      --danger: #ef4444;
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 24px;
+      --max: 1100px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color: var(--text);
+      background:
+        radial-gradient(900px 500px at 10% 10%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(900px 500px at 90% 0%, rgba(34,197,94,.22), transparent 55%),
+        radial-gradient(900px 600px at 70% 110%, rgba(56,189,248,.18), transparent 55%),
+        linear-gradient(180deg, #07101f 0%, #050914 60%, #04050f 100%);
+      overflow-x:hidden;
+    }
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding: 20px 16px 80px}
+    .glass{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: var(--radius2);
+    }
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding: 12px 0;
+      background: linear-gradient(180deg, rgba(5,9,20,.9), rgba(5,9,20,.6), transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius2);
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 210px;
+    }
+    .logo{
+      width: 42px; height: 42px;
+      border-radius: 14px;
+      background:
+        radial-gradient(15px 15px at 30% 30%, rgba(255,255,255,.55), transparent 60%),
+        linear-gradient(135deg, var(--brand), #2563eb);
+      box-shadow: 0 10px 25px rgba(124,58,237,.28);
+      border: 1px solid rgba(255,255,255,.18);
+    }
+    .brand h1{
+      font-size: 16px;
+      margin:0;
+      line-height:1.1;
+      letter-spacing: .2px;
+    }
+    .brand p{
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .controls{
+      flex:1;
+      display:flex;
+      gap: 10px;
+      align-items:center;
+      justify-content:center;
+      flex-wrap:wrap;
+    }
+    .input, select{
+      appearance:none;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.14);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      outline:none;
+      transition: .2s ease;
+      font-size: 13px;
+    }
+    .input:focus, select:focus{
+      border-color: rgba(124,58,237,.6);
+      box-shadow: 0 0 0 4px rgba(124,58,237,.15);
+    }
+    .search{min-width: 260px; max-width: 520px; width: 100%;}
+    .btn{
+      cursor:pointer;
+      border: 1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.07);
+      color: var(--text);
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-weight: 600;
+      transition: .2s ease;
+      display:inline-flex;
+      gap: 8px;
+      align-items:center;
+      justify-content:center;
+      user-select:none;
+      white-space:nowrap;
+    }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.10)}
+    .btn:active{transform: translateY(0)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(124,58,237,.95), rgba(37,99,235,.9));
+      border-color: rgba(255,255,255,.2);
+      box-shadow: 0 10px 25px rgba(124,58,237,.18);
+    }
+    .btn.success{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(16,185,129,.9));
+      border-color: rgba(255,255,255,.2);
+      box-shadow: 0 10px 25px rgba(34,197,94,.14);
+    }
+    .btn.danger{
+      background: rgba(239,68,68,.12);
+      border-color: rgba(239,68,68,.3);
+      color: rgba(255,255,255,.9);
+    }
+    .pill{
+      font-size: 12px;
+      color: rgba(255,255,255,.85);
+      background: rgba(255,255,255,.10);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 6px 10px;
+      border-radius: 999px;
+      display:inline-flex;
+      gap:6px;
+      align-items:center;
+    }
+    .countDot{
+      font-family: var(--mono);
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.15);
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .hero{
+      margin-top: 14px;
+      padding: 22px 18px;
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items:stretch;
+    }
+    .hero h2{
+      margin:0;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+      line-height:1.15;
+    }
+    .hero p{color: var(--muted); margin: 10px 0 0; max-width: 55ch}
+    .heroCard{
+      border-radius: var(--radius2);
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      justify-content:space-between;
+    }
+    .heroCard .row{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+    }
+    .heroCard small{color: var(--muted)}
+    .heroBadge{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top: 12px;
+    }
+    .grid{
+      margin-top: 16px;
+      display:grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+    }
+    .card{
+      grid-column: span 4;
+      border-radius: var(--radius2);
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      min-height: 280px;
+      transition: .2s ease;
+    }
+    .card:hover{
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.075);
+      border-color: rgba(255,255,255,.18);
+    }
+    .thumb{
+      height: 140px;
+      background:
+        radial-gradient(200px 120px at 20% 20%, rgba(124,58,237,.35), transparent 60%),
+        radial-gradient(200px 140px at 90% 30%, rgba(34,197,94,.25), transparent 60%),
+        linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.02));
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      padding: 12px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .thumb .tag{
+      font-size: 12px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.14);
+      color: rgba(255,255,255,.9);
+    }
+    .thumb .price{
+      font-family: var(--mono);
+      font-size: 13px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,.25);
+      border: 1px solid rgba(255,255,255,.14);
+    }
+    .body{
+      padding: 14px;
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+      flex:1;
+    }
+    .title{
+      margin:0;
+      font-size: 16px;
+      line-height:1.25;
+      letter-spacing: -.2px;
+    }
+    .desc{margin:0; color: var(--muted); font-size: 13px; line-height:1.4}
+    .meta{
+      display:flex;
+      gap: 10px;
+      flex-wrap:wrap;
+      margin-top:auto;
+    }
+    .meta span{
+      font-size: 12px;
+      color: rgba(255,255,255,.8);
+      background: rgba(255,255,255,.08);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+    .actions{
+      display:flex;
+      gap: 10px;
+      padding: 14px;
+      border-top: 1px solid rgba(255,255,255,.10);
+    }
+    .actions .btn{flex:1}
+
+    /* Cart Drawer */
+    .drawerOverlay{
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.55);
+      opacity: 0;
+      pointer-events:none;
+      transition: .2s ease;
+      z-index: 50;
+    }
+    .drawerOverlay.show{opacity:1; pointer-events:auto}
+    .drawer{
+      position: fixed;
+      right: 16px;
+      top: 16px;
+      bottom: 16px;
+      width: min(420px, calc(100vw - 32px));
+      transform: translateX(110%);
+      transition: .22s ease;
+      z-index: 60;
+      padding: 14px;
+      border-radius: var(--radius2);
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .drawer.show{transform: translateX(0)}
+    .drawerHeader{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      padding: 10px 10px 0;
+    }
+    .drawerHeader h3{margin:0; font-size: 16px}
+    .drawerHeader small{color: var(--muted)}
+    .cartList{
+      flex:1;
+      overflow:auto;
+      padding: 10px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .cartItem{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      margin-bottom: 10px;
+    }
+    .cartItem:last-child{margin-bottom:0}
+    .cartItem h4{margin:0; font-size: 14px}
+    .cartItem p{margin:4px 0 0; color: var(--muted); font-size: 12px}
+    .qty{
+      display:flex;
+      align-items:center;
+      gap: 8px;
+      justify-content:flex-end;
+    }
+    .qty .btn{padding: 8px 10px; border-radius: 12px}
+    .qty .num{font-family: var(--mono); min-width: 24px; text-align:center}
+    .summary{
+      padding: 12px;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      display:flex;
+      flex-direction:column;
+      gap: 10px;
+    }
+    .sumRow{
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      color: rgba(255,255,255,.9);
+    }
+    .sumRow small{color: var(--muted)}
+    .footerActions{
+      display:flex;
+      gap: 10px;
+    }
+    .footerActions .btn{flex:1}
+    .muted{color: var(--muted)}
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      transition: .22s ease;
+      z-index: 80;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(0,0,0,.35);
+      backdrop-filter: blur(10px);
+    }
+    .toast.show{opacity:1; transform: translateX(-50%) translateY(0)}
+    @media (max-width: 920px){
+      .hero{grid-template-columns: 1fr; }
+      .card{grid-column: span 6;}
+      .brand{min-width: unset}
+    }
+    @media (max-width: 560px){
+      .card{grid-column: span 12;}
+      .topbar{flex-direction:column; align-items:stretch}
+      .controls{justify-content:stretch}
+      .search{min-width: unset}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="topbar glass">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <h1>Hanafi Store</h1>
+            <p>Toko online simpel • cepat • responsif</p>
+          </div>
+        </div>
+
+        <div class="controls">
+          <input id="q" class="input search" placeholder="Cari produk… (contoh: hoodie, kopi, botol)" />
+          <select id="cat">
+            <option value="all">Semua Kategori</option>
+          </select>
+          <select id="sort">
+            <option value="popular">Urutkan: Populer</option>
+            <option value="low">Harga: Termurah</option>
+            <option value="high">Harga: Termahal</option>
+            <option value="az">Nama: A–Z</option>
+          </select>
+        </div>
+
+        <div style="display:flex; gap:10px; align-items:center;">
+          <span class="pill">Cart <span class="countDot" id="cartCount">0</span></span>
+          <button class="btn primary" id="openCart" title="Buka keranjang">🛒 Keranjang</button>
+        </div>
+      </div>
+
+      <section class="hero glass">
+        <div>
+          <h2>Belanja enak, checkout langsung ke WhatsApp.</h2>
+          <p>
+            Pilih produk favoritmu di Hanafi Store. Tambah ke keranjang, lalu checkout — pesan otomatis rapi
+            untuk dikirim ke WhatsApp penjual.
+          </p>
+          <div class="heroBadge">
+            <span class="pill">⚡ Cepat</span>
+            <span class="pill">📱 Responsif</span>
+            <span class="pill">🧾 Checkout WA</span>
+            <span class="pill">🔎 Pencarian</span>
+          </div>
+        </div>
+
+        <div class="heroCard">
+          <div class="row">
+            <div>
+              <div class="pill">📦 Promo hari ini</div>
+              <p class="muted" style="margin:10px 0 0">Diskon 10% untuk min. 3 item (contoh fitur).</p>
+            </div>
+            <div class="pill">⭐ 4.9/5</div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <button class="btn success" id="scrollProducts">🛍️ Lihat Produk</button>
+            <button class="btn" id="demoFill">✨ Isi Data Demo</button>
+          </div>
+          <small>Tip: ubah nomor WA & daftar produk di bagian “CONFIG” pada script.</small>
+        </div>
+      </section>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <!-- Drawer Cart -->
+  <div class="drawerOverlay" id="overlay"></div>
+  <aside class="drawer glass" id="drawer" aria-label="Keranjang">
+    <div class="drawerHeader">
+      <div>
+        <h3>Keranjang</h3>
+        <small id="cartHint" class="muted">Belum ada item.</small>
+      </div>
+      <button class="btn" id="closeCart">✕ Tutup</button>
+    </div>
+
+    <div class="cartList" id="cartList"></div>
+
+    <div class="summary">
+      <div class="sumRow">
+        <span>Subtotal</span>
+        <span id="subtotal" style="font-family:var(--mono)">Rp0</span>
+      </div>
+      <div class="sumRow">
+        <span>Diskon</span>
+        <span id="discount" style="font-family:var(--mono)">- Rp0</span>
+      </div>
+      <div class="sumRow">
+        <span>Ongkir</span>
+        <span id="ship" style="font-family:var(--mono)">Rp0</span>
+      </div>
+      <div class="sumRow" style="border-top:1px solid rgba(255,255,255,.12); padding-top:10px;">
+        <strong>Total</strong>
+        <strong id="total" style="font-family:var(--mono)">Rp0</strong>
+      </div>
+
+      <div style="display:grid; gap:10px;">
+        <input id="buyerName" class="input" placeholder="Nama kamu (untuk checkout)" />
+        <input id="buyerAddr" class="input" placeholder="Alamat pengiriman (opsional)" />
+        <input id="shipFee" class="input" type="number" min="0" step="1000" placeholder="Ongkir (Rp) — isi manual" />
+      </div>
+
+      <div class="footerActions">
+        <button class="btn danger" id="clearCart">🧹 Kosongkan</button>
+        <button class="btn success" id="checkout">✅ Checkout WA</button>
+      </div>
+      <small class="muted">Checkout akan membuka WhatsApp (web/app) dengan pesan otomatis.</small>
+    </div>
+  </aside>
+
+  <div class="toast" id="toast">Ditambahkan ke keranjang ✅</div>
+
+  <script>
+    /***********************
+     * CONFIG — UBAH DI SINI
+     ***********************/
+    const STORE = {
+      name: "Hanafi Store",
+      waNumber: "6285177111932", // ganti: format internasional tanpa + (contoh Indonesia: 62...)
+      currency: "IDR",
+      discountRule: { minItems: 3, percent: 10 } // contoh: diskon 10% kalau total qty >= 3
+    };
+
+    // Produk demo (silakan edit / tambah)
+    const PRODUCTS = [
+      { id:"p1", name:"Hoodie Premium", price:179000, category:"Fashion", badges:["Best Seller","Unisex"], desc:"Bahan tebal, halus, nyaman dipakai harian.", stock: 24 },
+      { id:"p2", name:"Kaos Oversize", price:99000, category:"Fashion", badges:["New"], desc:"Cutting oversized, adem, jahitan rapi.", stock: 40 },
+      { id:"p3", name:"Kopi Arabica 250g", price:85000, category:"Makanan & Minuman", badges:["Fresh Roast"], desc:"Aroma wangi, rasa clean, cocok V60/espresso.", stock: 18 },
+      { id:"p4", name:"Sambal Rumahan 200g", price:32000, category:"Makanan & Minuman", badges:["Pedas"], desc:"Sambal mantap untuk semua lauk. Awet & higienis.", stock: 50 },
+      { id:"p5", name:"Botol Minum 1L", price:74000, category:"Aksesoris", badges:["BPA Free"], desc:"Praktis buat olahraga/kerja. Tutup rapat anti bocor.", stock: 30 },
+      { id:"p6", name:"Powerbank 10.000mAh", price:155000, category:"Elektronik", badges:["Fast Charge"], desc:"Ringkas, aman, cocok buat perjalanan.", stock: 12 },
+      { id:"p7", name:"Parfum 50ml", price:119000, category:"Kecantikan", badges:["Wangi Tahan Lama"], desc:"Karakter fresh-manis, cocok harian.", stock: 20 },
+      { id:"p8", name:"Notebook A5", price:29000, category:"Stationery", badges:["Minimalis"], desc:"Kertas tebal, enak untuk catatan/jurnal.", stock: 60 },
+      { id:"p9", name:"Headset Wireless", price:189000, category:"Elektronik", badges:["Noise Reduction"], desc:"Baterai awet, nyaman dipakai lama.", stock: 14 },
+    ];
+
+    /***********************
+     * UTIL
+     ***********************/
+    const rupiah = (n) => new Intl.NumberFormat("id-ID", { style:"currency", currency:"IDR", maximumFractionDigits:0 }).format(n);
+    const byId = (id) => document.getElementById(id);
+    const toastEl = byId("toast");
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastEl._t);
+      toastEl._t = setTimeout(()=>toastEl.classList.remove("show"), 1400);
+    }
+
+    /***********************
+     * STATE
+     ***********************/
+    const state = {
+      q: "",
+      cat: "all",
+      sort: "popular",
+      cart: loadCart(), // { productId: qty }
+    };
+
+    function loadCart(){
+      try{
+        return JSON.parse(localStorage.getItem("hanafi_cart") || "{}");
+      }catch(e){ return {}; }
+    }
+    function saveCart(){
+      localStorage.setItem("hanafi_cart", JSON.stringify(state.cart));
+    }
+
+    /***********************
+     * RENDER FILTERS
+     ***********************/
+    const catSelect = byId("cat");
+    const categories = ["all", ...Array.from(new Set(PRODUCTS.map(p => p.category)))];
+    categories.forEach(c=>{
+      const opt = document.createElement("option");
+      opt.value = c;
+      opt.textContent = c === "all" ? "Semua Kategori" : c;
+      catSelect.appendChild(opt);
+    });
+
+    /***********************
+     * PRODUCT LIST
+     ***********************/
+    const grid = byId("grid");
+    function getFiltered(){
+      const q = state.q.trim().toLowerCase();
+      let items = PRODUCTS.slice();
+
+      if(state.cat !== "all"){
+        items = items.filter(p => p.category === state.cat);
+      }
+      if(q){
+        items = items.filter(p =>
+          (p.name + " " + p.category + " " + p.desc + " " + (p.badges||[]).join(" "))
+            .toLowerCase().includes(q)
+        );
+      }
+
+      if(state.sort === "low") items.sort((a,b)=>a.price-b.price);
+      if(state.sort === "high") items.sort((a,b)=>b.price-a.price);
+      if(state.sort === "az") items.sort((a,b)=>a.name.localeCompare(b.name));
+      // "popular" = urutan default (sesuai array)
+      return items;
+    }
+
+    function renderProducts(){
+      const items = getFiltered();
+      grid.innerHTML = "";
+      if(items.length === 0){
+        grid.innerHTML = `
+          <div class="glass" style="grid-column:1/-1; padding:18px;">
+            <h3 style="margin:0 0 6px;">Produk tidak ditemukan</h3>
+            <p class="muted" style="margin:0;">Coba ganti kata kunci atau pilih kategori lain.</p>
+          </div>`;
+        return;
+      }
+
+      for(const p of items){
+        const el = document.createElement("article");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="thumb">
+            <span class="tag">${escapeHtml(p.category)}</span>
+            <span class="price">${rupiah(p.price)}</span>
+          </div>
+          <div class="body">
+            <h3 class="title">${escapeHtml(p.name)}</h3>
+            <p class="desc">${escapeHtml(p.desc)}</p>
+            <div class="meta">
+              ${(p.badges||[]).slice(0,3).map(b=>`<span>✨ ${escapeHtml(b)}</span>`).join("")}
+              <span>📦 Stok: ${p.stock}</span>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="btn" data-act="detail" data-id="${p.id}">ℹ️ Detail</button>
+            <button class="btn primary" data-act="add" data-id="${p.id}">➕ Tambah</button>
+          </div>
+        `;
+        grid.appendChild(el);
+      }
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    /***********************
+     * CART
+     ***********************/
+    const overlay = byId("overlay");
+    const drawer = byId("drawer");
+    const cartList = byId("cartList");
+
+    function openCart(){
+      overlay.classList.add("show");
+      drawer.classList.add("show");
+      renderCart();
+    }
+    function closeCart(){
+      overlay.classList.remove("show");
+      drawer.classList.remove("show");
+    }
+
+    function cartQtyTotal(){
+      return Object.values(state.cart).reduce((a,b)=>a+b,0);
+    }
+    function cartItems(){
+      return Object.entries(state.cart)
+        .map(([id,qty])=>{
+          const p = PRODUCTS.find(x=>x.id===id);
+          return p ? { ...p, qty } : null;
+        })
+        .filter(Boolean);
+    }
+
+    function calcTotals(){
+      const items = cartItems();
+      const subtotal = items.reduce((sum,i)=> sum + i.price * i.qty, 0);
+      const totalQty = items.reduce((sum,i)=> sum + i.qty, 0);
+
+      const discount = (totalQty >= STORE.discountRule.minItems)
+        ? Math.round(subtotal * (STORE.discountRule.percent/100))
+        : 0;
+
+      const ship = Math.max(0, Number(byId("shipFee").value || 0));
+      const total = subtotal - discount + ship;
+      return { subtotal, discount, ship, total, totalQty };
+    }
+
+    function renderCart(){
+      const items = cartItems();
+      byId("cartCount").textContent = cartQtyTotal();
+      byId("cartHint").textContent = items.length ? `${items.length} jenis item di keranjang` : "Belum ada item.";
+
+      cartList.innerHTML = "";
+      if(!items.length){
+        cartList.innerHTML = `
+          <div class="muted" style="padding:14px;">
+            Keranjang masih kosong. Tambah produk dulu ya 😊
+          </div>
+        `;
+      } else {
+        for(const i of items){
+          const row = document.createElement("div");
+          row.className = "cartItem";
+          row.innerHTML = `
+            <div>
+              <h4>${escapeHtml(i.name)}</h4>
+              <p>${rupiah(i.price)} • ${escapeHtml(i.category)}</p>
+            </div>
+            <div class="qty">
+              <button class="btn" data-act="dec" data-id="${i.id}">−</button>
+              <span class="num">${i.qty}</span>
+              <button class="btn" data-act="inc" data-id="${i.id}">+</button>
+            </div>
+          `;
+          cartList.appendChild(row);
+        }
+      }
+
+      const t = calcTotals();
+      byId("subtotal").textContent = rupiah(t.subtotal);
+      byId("discount").textContent = "- " + rupiah(t.discount);
+      byId("ship").textContent = rupiah(t.ship);
+      byId("total").textContent = rupiah(t.total);
+
+      saveCart();
+    }
+
+    function addToCart(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      const current = state.cart[id] || 0;
+      if(current + 1 > p.stock){
+        toast("Stok tidak cukup ❌");
+        return;
+      }
+      state.cart[id] = current + 1;
+      toast("Ditambahkan ke keranjang ✅");
+      renderCart();
+    }
+    function inc(id){
+      addToCart(id);
+    }
+    function dec(id){
+      const current = state.cart[id] || 0;
+      if(current <= 1) delete state.cart[id];
+      else state.cart[id] = current - 1;
+      toast("Keranjang diperbarui");
+      renderCart();
+    }
+    function clearCart(){
+      state.cart = {};
+      toast("Keranjang dikosongkan");
+      renderCart();
+    }
+
+    /***********************
+     * DETAIL MODAL (simple)
+     ***********************/
+    function showDetail(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      if(!p) return;
+      alert(
+        `${p.name}\n\n`+
+        `Harga: ${rupiah(p.price)}\n`+
+        `Kategori: ${p.category}\n`+
+        `Stok: ${p.stock}\n\n`+
+        `${p.desc}\n\n`+
+        `Tag: ${(p.badges||[]).join(", ")}`
+      );
+    }
+
+    /***********************
+     * CHECKOUT WA
+     ***********************/
+    function checkoutWA(){
+      const items = cartItems();
+      if(!items.length){
+        toast("Keranjang masih kosong");
+        return;
+      }
+      const name = (byId("buyerName").value || "").trim();
+      const addr = (byId("buyerAddr").value || "").trim();
+      const t = calcTotals();
+
+      const lines = [];
+      lines.push(`Halo *${STORE.name}* 👋`);
+      lines.push(`Saya mau order:`);
+      lines.push(``);
+      items.forEach((i,idx)=>{
+        lines.push(`${idx+1}. ${i.name} — ${i.qty} x ${rupiah(i.price)} = ${rupiah(i.qty*i.price)}`);
+      });
+      lines.push(``);
+      lines.push(`Subtotal: ${rupiah(t.subtotal)}`);
+      if(t.discount > 0) lines.push(`Diskon (${STORE.discountRule.percent}%): -${rupiah(t.discount)}`);
+      lines.push(`Ongkir: ${rupiah(t.ship)}`);
+      lines.push(`TOTAL: *${rupiah(t.total)}*`);
+      lines.push(``);
+      if(name) lines.push(`Nama: ${name}`);
+      if(addr) lines.push(`Alamat: ${addr}`);
+      lines.push(``);
+      lines.push(`Metode bayar & pengiriman gimana ya?`);
+
+      const msg = encodeURIComponent(lines.join("\n"));
+      const url = `https://wa.me/${STORE.waNumber}?text=${msg}`;
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    /***********************
+     * EVENTS
+     ***********************/
+    byId("q").addEventListener("input", (e)=>{ state.q = e.target.value; renderProducts(); });
+    byId("cat").addEventListener("change", (e)=>{ state.cat = e.target.value; renderProducts(); });
+    byId("sort").addEventListener("change", (e)=>{ state.sort = e.target.value; renderProducts(); });
+
+    byId("openCart").addEventListener("click", openCart);
+    byId("closeCart").addEventListener("click", closeCart);
+    overlay.addEventListener("click", closeCart);
+
+    byId("shipFee").addEventListener("input", renderCart);
+    byId("clearCart").addEventListener("click", clearCart);
+    byId("checkout").addEventListener("click", checkoutWA);
+
+    byId("scrollProducts").addEventListener("click", ()=>{
+      window.scrollTo({ top: document.querySelector("main").offsetTop - 10, behavior:"smooth" });
+    });
+
+    // tombol demo: isi nama + ongkir contoh
+    byId("demoFill").addEventListener("click", ()=>{
+      byId("buyerName").value = "Hanapi";
+      byId("buyerAddr").value = "Contoh alamat: Jl. Mawar No. 10, Jakarta";
+      byId("shipFee").value = 15000;
+      toast("Data demo diisi");
+      renderCart();
+    });
+
+    // Delegation untuk tombol produk & cart
+    document.addEventListener("click", (e)=>{
+      const btn = e.target.closest("button[data-act]");
+      if(!btn) return;
+      const act = btn.dataset.act;
+      const id = btn.dataset.id;
+      if(act==="add") addToCart(id);
+      if(act==="detail") showDetail(id);
+      if(act==="inc") inc(id);
+      if(act==="dec") dec(id);
+    });
+
+    // Init
+    renderProducts();
+    renderCart();
+  </script>
+</body>
+</html>
